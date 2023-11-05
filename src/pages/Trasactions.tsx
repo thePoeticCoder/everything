@@ -1,7 +1,7 @@
 import React from "react";
 
 const Trasactions = () => {
-  return <div></div>;
+  return <div>Hello Trasactions</div>;
 };
 
 export default Trasactions;

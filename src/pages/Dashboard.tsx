@@ -1,7 +1,12 @@
-import React from "react";
+import AdminSideBar from "../components/AdminSideBar";
 
 const Dashboard = () => {
-  return <div>Hello Dashboard</div>;
+  return (
+    <div className="adminContainer">
+      <AdminSideBar />
+      <main>inside admin sidebar</main>
+    </div>
+  );
 };
 
 export default Dashboard;
