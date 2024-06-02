@@ -59,11 +59,11 @@ const AdminSidebar = () => {
             : {}
         }
       >
-        <h2>Logo.</h2>
-        <DivOne location={location} />
-        <DivTwo location={location} />
-        <DivThree location={location} />
-
+        <h2>
+          <a href="/Dashboard"></a>EveryThing
+        </h2>
+        <Dashboard location={location} />
+        <AppsSection location={location} />
         {phoneActive && (
           <button id="close-sidebar" onClick={() => setShowModal(false)}>
             Close
@@ -74,7 +74,7 @@ const AdminSidebar = () => {
   );
 };
 
-const DivOne = ({ location }: { location: Location }) => (
+const Dashboard = ({ location }: { location: Location }) => (
   <div>
     <h5>Dashboard</h5>
     <ul>
@@ -106,7 +106,7 @@ const DivOne = ({ location }: { location: Location }) => (
   </div>
 );
 
-const DivTwo = ({ location }: { location: Location }) => (
+const ChartsSection = ({ location }: { location: Location }) => (
   <div>
     <h5>Charts</h5>
     <ul>
@@ -122,7 +122,7 @@ const DivTwo = ({ location }: { location: Location }) => (
   </div>
 );
 
-const DivThree = ({ location }: { location: Location }) => (
+const AppsSection = ({ location }: { location: Location }) => (
   <div>
     <h5>Apps</h5>
     <ul>
@@ -135,6 +135,13 @@ const DivThree = ({ location }: { location: Location }) => (
       <Li
         url="/app/coupon"
         text="Coupon"
+        Icon={RiCoupon3Fill}
+        location={location}
+      />
+      <Li url="/app/toss" text="Toss" Icon={FaGamepad} location={location} />
+      <Li
+        url="/app/notes"
+        text="Notes"
         Icon={RiCoupon3Fill}
         location={location}
       />

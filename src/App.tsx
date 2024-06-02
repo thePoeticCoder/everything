@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loader from "./components/Loader";
+import Notes from "./pages/apps/Notes";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Products = lazy(() => import("./pages/Products"));
@@ -33,17 +34,10 @@ const App = () => {
           <Route path="/customer" element={<Customers />} />
           <Route path="/transaction" element={<Transaction />} />
 
-          {/* Charts */}
-
-          <Route path="/chart/bar" element={<BarCharts />} />
-          <Route path="/chart/pie" element={<PieCharts />} />
-          <Route path="/chart/line" element={<LineCharts />} />
-
-          {/* Apps */}
-
           <Route path="/app/stopwatch" element={<Stopwatch />} />
           <Route path="/app/coupon" element={<Coupon />} />
           <Route path="/app/toss" element={<Toss />} />
+          <Route path="/app/notes" element={<Notes />} />
 
           {/* Management */}
           <Route path="/product/new" element={<NewProduct />} />
