@@ -24,25 +24,25 @@ const dashboard = () => {
           <WidgetItem
             percent={40}
             amount={true}
-            value={340000}
+            value={"Total Revenue"}
             heading="Revenue"
             color="rgb(0,115,255)"
           />
           <WidgetItem
             percent={-14}
-            value={400}
+            value={"Total Users"}
             heading="Users"
             color="rgb(0 198 202)"
           />
           <WidgetItem
             percent={80}
-            value={23000}
+            value={"Trascations"}
             heading="Transactions"
             color="rgb(255 196 0)"
           />
           <WidgetItem
             percent={30}
-            value={1000}
+            value={"Products"}
             heading="Products"
             color="rgb(76 0 255)"
           />
@@ -102,7 +102,7 @@ const dashboard = () => {
 
 interface WidgetItemProps {
   heading: string;
-  value: number;
+  value: string;
   percent: number;
   color: string;
   amount?: boolean;
