@@ -17,7 +17,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-function ContactForm() {
+export default function ContactUsPage() {
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ function ContactForm() {
 
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted:", data);
-    alert("✅ Your message has been sent successfully!");
+    alert("Your message has been sent successfully!");
   };
 
   useEffect(() => {
@@ -43,28 +43,28 @@ function ContactForm() {
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <div className='p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10'>
-      <h2 className='text-2xl font-semibold text-center mb-6'>📩 Contact Us</h2>
+    <div className="p-8 bg-white shadow-lg rounded-lg max-w-md mx-auto mt-10">
+      <h2 className="text-2xl font-semibold text-center mb-6">📩 Contact Us</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4' noValidate>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         <div>
           <input
             {...register("name")}
-            type='text'
-            placeholder='Your Name'
-            className='w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition'
+            type="text"
+            placeholder="Your Name"
+            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition"
           />
-          <p className='text-red-500 text-xs mt-1'>{errors.name?.message}</p>
+          <p className="text-red-500 text-xs mt-1">{errors.name?.message}</p>
         </div>
 
         <div>
           <input
             {...register("email")}
-            type='email'
-            placeholder='Your Email'
-            className='w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition'
+            type="email"
+            placeholder="Your Email"
+            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition"
           />
-          <p className='text-red-500 text-xs mt-1'>{errors.email?.message}</p>
+          <p className="text-red-500 text-xs mt-1">{errors.email?.message}</p>
         </div>
 
         <div>
@@ -72,50 +72,54 @@ function ContactForm() {
             {...register("service")}
             value={selectedService}
             onChange={(e) => setSelectedService(e.target.value)}
-            className='w-full p-3 border border-gray-300 rounded bg-white focus:outline-none focus:border-black transition'>
-            <option value=''>Select a Service</option>
+            className="w-full p-3 border border-gray-300 rounded bg-white focus:outline-none focus:border-black transition"
+          >
+            <option value="">Select a Service</option>
             {servicesList.map((service) => (
               <option key={service.id} value={service.title}>
                 {service.title}
               </option>
             ))}
           </select>
-          <p className='text-red-500 text-xs mt-1'>{errors.service?.message}</p>
+          <p className="text-red-500 text-xs mt-1">{errors.service?.message}</p>
         </div>
 
         <div>
           <textarea
             {...register("message")}
-            placeholder='Your Message'
-            className='w-full p-3 border border-gray-300 rounded h-24 focus:outline-none focus:border-black transition'
+            placeholder="Your Message"
+            className="w-full p-3 border border-gray-300 rounded h-24 focus:outline-none focus:border-black transition"
           />
-          <p className='text-red-500 text-xs mt-1'>{errors.message?.message}</p>
+          <p className="text-red-500 text-xs mt-1">{errors.message?.message}</p>
         </div>
 
         <button
-          type='submit'
+          type="submit"
           disabled={!isDirty || !isValid || isSubmitting}
-          className='w-full bg-black text-white py-3 rounded hover:bg-gray-900 transition duration-300 disabled:opacity-50'>
+          className="w-full bg-black text-white py-3 rounded hover:bg-gray-900 transition duration-300 disabled:opacity-50"
+        >
           {isSubmitting ? "Sending..." : "Send Message 🚀"}
         </button>
 
-        <div className='flex justify-between mt-4 text-gray-600 text-sm'>
+        <div className="flex justify-between mt-4 text-gray-600 text-sm">
           <button
-            type='button'
+            type="button"
             onClick={() => reset()}
-            className='hover:text-black transition'>
+            className="hover:text-black transition"
+          >
             Reset
           </button>
           <button
-            type='button'
+            type="button"
             onClick={() => trigger()}
-            className='hover:text-black transition'>
+            className="hover:text-black transition"
+          >
             Validate
           </button>
         </div>
       </form>
 
-      <div className='mt-8 text-center text-gray-600'>
+      <div className="mt-8 text-center text-gray-600">
         <p>
           📞 Contact us at: <strong>9090909090</strong>
         </p>
@@ -126,5 +130,3 @@ function ContactForm() {
     </div>
   );
 }
-
-export default ContactForm;

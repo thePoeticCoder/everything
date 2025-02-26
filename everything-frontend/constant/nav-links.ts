@@ -5,5 +5,11 @@ export const navLinks = [
   { id: "reviews", url: "/reviews", label: "Reviews" },
   { id: "team", url: "#", label: "Team" },
   { id: "pricing", url: "pricing", label: "Pricing" },
-  { id: "contact", url: "contact-us", label: "Contact" },
+  { id: "contact", url: "contact-us", label: "Contact US" },
 ];
+
+export type NavLinkType = {
+  id: string;
+  label: string;
+  url: string;
+};
