@@ -28,13 +28,15 @@ const Nav = ({ openNav }: Props) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
-    <div
+    <nav
       className={`transition-all ${
-        navbg ? "bg-white shadow-md" : "fixed"
-      } duration-200 h-[12vh] z-[50] fixed w-full`}
+        navbg ? "bg-white shadow-md" : "bg-transparent"
+      } duration-300 h-[12vh] z-[50] fixed w-full mb-8`}
     >
       <div className="flex items-center justify-between w-[90%] xl:w-[80%] mx-auto h-full">
+        {/* Logo Section */}
         <div className="flex items-center space-x-2">
           <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
             <GrTechnology className="w-6 h-6 text-white" />
@@ -44,6 +46,7 @@ const Nav = ({ openNav }: Props) => {
           </h1>
         </div>
 
+        {/* Desktop Links */}
         <div className="hidden lg:flex items-center space-x-10">
           {navLinks.map((link: NavLinkType) => (
             <Link
@@ -56,6 +59,7 @@ const Nav = ({ openNav }: Props) => {
           ))}
         </div>
 
+        {/* Create Account & Mobile Menu Icon */}
         <div className="flex items-center space-x-4">
           <Link href="/create-account">
             <button className="relative inline-block text-lg group px-5 py-3 font-medium text-gray-800 border-2 border-gray-900 rounded-lg transition-all duration-300 hover:text-white hover:bg-gray-900">
@@ -69,7 +73,7 @@ const Nav = ({ openNav }: Props) => {
           />
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
