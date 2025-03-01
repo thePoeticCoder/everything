@@ -1,10 +1,10 @@
 /** @format */
 
-import { CreateAccount } from "../components/create-account";
+import { CreateAccount } from "../components/Helper/create-account";
 
 export default function CreateAccountPage() {
   return (
-    <div className='pt-[12vh] w-[80vw] mx-auto'>
+    <div className="pt-[12vh] w-[80vw] mx-auto">
       <CreateAccount />
     </div>
   );

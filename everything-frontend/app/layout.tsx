@@ -3,9 +3,10 @@
 
 import "./globals.css";
 import { Rethink_Sans } from "next/font/google";
-import ResponsiveNav from "./components/Home/Navbar/ResponsiveNav";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Navbar from "./components/Home/Navbar/ResponsiveNav";
+import Footer from "./components/Footer/footer";
 
 const font = Rethink_Sans({
   weight: ["400", "500", "600", "700", "800"],
@@ -33,8 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} antialiased`}>
-        {token === "12345" && <ResponsiveNav />}
-        {children}
+        {token === "12345" && <Navbar />}
+        <main className="pt-[12vh]">{children}</main>
+        <Footer />
       </body>
     </html>
   );
