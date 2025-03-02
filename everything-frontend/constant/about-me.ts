@@ -6,16 +6,22 @@ export const funFacts = [
 
 export const experiences = [
   {
-    year: "2023 - Present",
+    year: "Oct 23 - Present",
     title: "Product Engineer at Travelopia",
     description:
       "Developed Partner Portal, Universal Quote Tool, Checkout Page, and Payment Portal using Next.js, Nest.js, and AWS.",
   },
   {
-    year: "2021 - 2023",
+    year: "Dec 21 - Aug 23",
     title: "SDE 1 at Kenko Health",
     description:
       "Spearheaded True-Cashless Dashboard and implemented microservices architecture with Kafka, NodeJS, and MongoDB.",
+  },
+  {
+    year: "Mar 21 - Dec 21",
+    title: "System Engineer at TCS",
+    description:
+      "Improved a product website with new features using AngularJS and Node.js, completed training, and worked in an agile environment.",
   },
 ];
 export const introStart = `Hi, I'm Paras Jain, a Product Engineer at Travelopia!`;
@@ -56,10 +62,12 @@ export const contactLinks = [
 export const skills = [
   { name: "JavaScript", years: 5 },
   { name: "React.js", years: 4 },
-  { name: "Node.js", years: 5 },
-  { name: "MongoDB", years: 3 },
+  { name: "Node.js", years: 4 },
+  { name: "Database", years: 4 },
   { name: "Kafka", years: 3 },
   { name: "AWS", years: 3 },
+  { name: "System Design", years: 3 },
+  { name: "CI/CD", years: 5 },
 ];
 
 export type Skill = {
