@@ -46,7 +46,7 @@ export const contactLinks = [
     href: "mailto:parasjainn08@gmail.com",
   },
   {
-    name: "Call",
+    name: "Phone",
     href: "tel:+919650861187",
   },
   {
