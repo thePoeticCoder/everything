@@ -45,7 +45,7 @@ const Hero = () => {
               Know the Developer
             </a>
             <a
-              href="#_"
+              href="create-account"
               className="rounded relative inline-flex items-center justify-center px-4 py-2 text-lg font-medium text-white bg-gray-600 border border-gray-800 shadow-lg transition-all duration-300 hover:bg-gray-500"
             >
               Get Free Trial

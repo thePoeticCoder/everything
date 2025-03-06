@@ -2,33 +2,35 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { GrTechnology } from "react-icons/gr";
+import Image from "next/image";
 import { navLinks, NavLinkType } from "@/constant/nav-links";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
 
-  // Toggle side drawer
   const toggleNav = () => {
     setShowNav((prev) => !prev);
   };
 
   return (
     <>
-      {/* Navbar */}
       <nav className="fixed top-0 left-0 w-full h-[12vh] bg-white shadow-md z-[50]">
         <div className="flex items-center justify-between w-[90%] xl:w-[80%] mx-auto h-full">
-          {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
-              <GrTechnology className="w-6 h-6 text-white" />
-            </div>
+            <Link href="/">
+              <Image
+                src="/images/brand-icon.webp"
+                alt="Everything Logo"
+                width={40}
+                height={40}
+                className="cursor-pointer rounded-md"
+              />
+            </Link>
             <h1 className="text-xl md:text-2xl font-bold text-gray-900 hidden sm:block">
               Everything
             </h1>
           </div>
 
-          {/* Desktop Links */}
           <div className="hidden lg:flex items-center space-x-10">
             {navLinks.map((link: NavLinkType) => (
               <Link
@@ -41,7 +43,6 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Create Account & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
             <Link href="/create-account" className="hidden lg:block">
               <button className="relative inline-block text-lg px-5 py-3 font-medium text-gray-800 border-2 border-gray-900 rounded-lg transition-all duration-300 hover:text-white hover:bg-gray-900">
@@ -49,7 +50,6 @@ const Navbar = () => {
               </button>
             </Link>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={toggleNav}
               className="lg:hidden px-4 py-2 bg-gray-800 text-white rounded-md transition-all duration-300"
