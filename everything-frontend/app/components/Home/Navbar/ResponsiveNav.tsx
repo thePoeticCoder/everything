@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full h-[12vh] bg-white shadow-md z-[50]">
-        <div className="flex items-center justify-between w-[90%] xl:w-[80%] mx-auto h-full">
+        <div className="flex items-center justify-between w-full px-4 xl:px-20 mx-auto h-full">
           <div className="flex items-center space-x-2">
             <Link href="/">
               <Image
@@ -31,21 +31,63 @@ const Navbar = () => {
             </h1>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-10">
-            {navLinks.map((link: NavLinkType) => (
-              <Link
-                href={link.url}
-                key={link.id}
-                className="text-gray-800 hover:text-red-600 font-semibold transition-all duration-200"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="hidden lg:flex flex-col items-center max-w-[60%]">
+            {/* Top Row */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-1">
+              {navLinks
+                .slice(0, Math.ceil(navLinks.length / 2))
+                .map((link: NavLinkType) => (
+                  <Link
+                    href={link.url}
+                    key={link.id}
+                    className="text-gray-800 hover:text-red-600 font-semibold text-sm transition-all duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+            </div>
+
+            {/* Animated Divider */}
+            <div className="w-full overflow-hidden -mt-1 -mb-1">
+              <svg viewBox="0 0 1440 60" className="w-full h-4">
+                <defs>
+                  <linearGradient
+                    id="greyWave"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="0%"
+                  >
+                    <stop offset="0%" stopColor="#6b7280" stopOpacity="1" />
+                    <stop offset="100%" stopColor="#111827" stopOpacity="1" />
+                  </linearGradient>
+                </defs>
+                <path
+                  fill="url(#greyWave)"
+                  d="M0,20 C180,40 360,0 540,20 C720,40 900,0 1080,20 C1260,40 1440,0 1440,0 L1440,60 L0,60 Z"
+                ></path>
+              </svg>
+            </div>
+
+            {/* Bottom Row */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+              {navLinks
+                .slice(Math.ceil(navLinks.length / 2))
+                .map((link: NavLinkType) => (
+                  <Link
+                    href={link.url}
+                    key={link.id}
+                    className="text-gray-800 hover:text-red-600 font-semibold text-sm transition-all duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+            </div>
           </div>
 
           <div className="flex items-center space-x-4">
             <Link href="/create-account" className="hidden lg:block">
-              <button className="relative inline-block text-lg px-5 py-3 font-medium text-gray-800 border-2 border-gray-900 rounded-lg transition-all duration-300 hover:text-white hover:bg-gray-900">
+              <button className="text-lg px-5 py-3 font-medium text-gray-800 border-2 border-gray-900 rounded-lg transition-all duration-300 hover:text-white hover:bg-gray-900 whitespace-nowrap">
                 Create Account
               </button>
             </Link>
@@ -64,14 +106,13 @@ const Navbar = () => {
       {showNav && (
         <div
           className="fixed inset-0 bg-black/50 z-[40] flex items-center justify-end"
-          onClick={toggleNav} // Close when clicking outside
+          onClick={toggleNav}
         >
           {/* Side Drawer */}
           <div
             className="w-64 h-full bg-white shadow-lg p-5 flex flex-col justify-center items-center space-y-5 transform transition-transform duration-300"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
             <button
               onClick={toggleNav}
               className="absolute top-4 right-4 text-gray-800 text-2xl"
@@ -79,14 +120,13 @@ const Navbar = () => {
               ✕
             </button>
 
-            {/* Navigation Links */}
             <ul className="w-full text-center space-y-5">
               {navLinks.map((link: NavLinkType) => (
                 <li key={link.id}>
                   <Link
                     href={link.url}
                     className="block text-gray-800 font-semibold text-lg hover:text-red-600"
-                    onClick={toggleNav} // Close drawer when clicking a link
+                    onClick={toggleNav}
                   >
                     {link.label}
                   </Link>
@@ -94,7 +134,6 @@ const Navbar = () => {
               ))}
             </ul>
 
-            {/* Create Account Button */}
             <Link href="/create-account">
               <button
                 className="w-full text-lg px-5 py-3 font-medium text-gray-800 border-2 border-gray-900 rounded-lg transition-all duration-300 hover:text-white hover:bg-gray-900"

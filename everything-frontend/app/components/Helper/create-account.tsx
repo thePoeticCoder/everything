@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { DevTool } from "@hookform/devtools";
 import { Service, servicesList } from "@/constant/service-list";
 
 const formSchema = z.object({
@@ -25,7 +24,6 @@ export const CreateAccount = () => {
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting, isSubmitSuccessful },
     reset,
-    control,
   } = useForm<FormType>({
     resolver: zodResolver(formSchema),
     mode: "all",
@@ -43,128 +41,134 @@ export const CreateAccount = () => {
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-4">
-      <h1 className="text-3xl md:text-5xl lg:text-7xl text-gray-950 font-bold text-center animate-typing overflow-hidden whitespace-nowrap">
-        Let's create your account..
-      </h1>
-
-      <form
-        className="shadow-lg rounded-lg p-6 w-full max-w-lg bg-white"
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-      >
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-lg mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-            {...register("name")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-          <p className="text-red-500 text-xs mt-1">{errors.name?.message}</p>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-lg mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            {...register("email")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-          <p className="text-red-500 text-xs mt-1">{errors.email?.message}</p>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="phone" className="block text-lg mb-2">
-            Phone Number
-          </label>
-          <input
-            type="text"
-            id="phone"
-            placeholder="Enter your phone number"
-            {...register("phone")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-          <p className="text-red-500 text-xs mt-1">{errors.phone?.message}</p>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="skills" className="block text-lg mb-2">
-            Skills
-          </label>
-          <select
-            id="skills"
-            {...register("skills")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          >
-            <option value="">Select a skill</option>
-            {servicesList.map((service: Service) => (
-              <option key={service.id} value={service.title}>
-                {service.title}
-              </option>
-            ))}
-          </select>
-          <p className="text-red-500 text-xs mt-1">{errors.skills?.message}</p>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="role" className="block text-lg mb-2">
-            Role
-          </label>
-          <select
-            id="role"
-            {...register("role")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          >
-            <option value="Hire a friend">Hire a friend</option>
-            <option value="Get Hired">Get Hired</option>
-          </select>
-          <p className="text-red-500 text-xs mt-1">{errors.role?.message}</p>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-lg mb-2">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            {...register("password")}
-            className="w-full p-2 border border-gray-300 rounded-md"
-          />
-          <p className="text-red-500 text-xs mt-1">
-            {errors.password?.message}
-          </p>
-        </div>
-
-        <button
-          type="submit"
-          disabled={!isDirty || !isValid || isSubmitting}
-          className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-900 transition duration-300 disabled:opacity-50"
+    <section className="min-h-screen bg-gradient-to-tr from-blue-50 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl w-full space-y-8 rounded-xl shadow-2xl bg-white p-10">
+        <h2 className="text-center text-4xl font-extrabold text-gray-900">
+          🚀 Create Your Account
+        </h2>
+        <form
+          className="space-y-6"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
         >
-          {isSubmitting ? "Creating..." : "Create Account"}
-        </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Name */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">Name</label>
+              <input
+                {...register("name")}
+                type="text"
+                placeholder="Jane Doe"
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-red-500 text-xs mt-1">
+                {errors.name?.message}
+              </p>
+            </div>
 
-        <div className="flex justify-between mt-4">
-          <button
-            type="button"
-            onClick={() => reset()}
-            className="text-gray-600"
-          >
-            Reset
-          </button>
-        </div>
-      </form>
+            {/* Email */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">Email</label>
+              <input
+                {...register("email")}
+                type="email"
+                placeholder="example@email.com"
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email?.message}
+              </p>
+            </div>
 
-      <DevTool control={control} />
-    </div>
+            {/* Phone */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                Phone Number
+              </label>
+              <input
+                {...register("phone")}
+                type="tel"
+                placeholder="9876543210"
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-red-500 text-xs mt-1">
+                {errors.phone?.message}
+              </p>
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                {...register("password")}
+                type="password"
+                placeholder="••••••••"
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              />
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password?.message}
+              </p>
+            </div>
+
+            {/* Skills */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">
+                Skills
+              </label>
+              <select
+                {...register("skills")}
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select a skill</option>
+                {servicesList.map((service: Service) => (
+                  <option key={service.id} value={service.title}>
+                    {service.title}
+                  </option>
+                ))}
+              </select>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.skills?.message}
+              </p>
+            </div>
+
+            {/* Role */}
+            <div>
+              <label className="text-sm font-medium text-gray-700">Role</label>
+              <select
+                {...register("role")}
+                className="mt-1 w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="Hire a friend">Hire a friend</option>
+                <option value="Get Hired">Get Hired</option>
+              </select>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.role?.message}
+              </p>
+            </div>
+          </div>
+
+          {/* Submit button */}
+          <div className="flex items-center justify-between gap-4">
+            <button
+              type="submit"
+              disabled={!isDirty || !isValid || isSubmitting}
+              className="w-full flex justify-center py-3 px-6 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 transition"
+            >
+              {isSubmitting ? "Creating..." : "Create Account"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="text-sm text-gray-500 hover:underline"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 };
