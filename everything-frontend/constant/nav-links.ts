@@ -5,7 +5,7 @@ export const navLinks = [
   { id: "pricing", url: "pricing", label: "Pricing" },
   { id: "aboutme", url: "about-me", label: "AboutMe" },
   { id: "contact", url: "contact-us", label: "ContactUS" },
-  { id: "machineCoding", url: "machine-coding", label: "Machine" },
+  { id: "tools", url: "tools", label: "Tools" },
 ];
 
 export type NavLinkType = {
