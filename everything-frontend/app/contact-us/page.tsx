@@ -121,7 +121,7 @@ export default function ContactUsPage() {
 
       <div className="mt-8 text-center text-gray-600">
         <p>
-          📞 Contact us at: <strong>9090909090</strong>
+          📞 Contact us at: <strong>9650861187</strong>
         </p>
         <p>
           📧 Email: <strong>parasjainn08@gmail.com</strong>
