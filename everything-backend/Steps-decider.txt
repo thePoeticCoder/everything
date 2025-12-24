@@ -1,0 +1,178 @@
+
+
+# 📘 COMPANY BACKEND SYSTEM
+
+## Master Technical Execution Document (Version 1.0)
+
+**Document Purpose**
+
+* Single source of truth
+* Phase & step–based tracking
+* Full technical context retention
+* Free / Free-tier only tools
+* Production-grade backend
+
+---
+
+## 🔑 Global Constraints (Apply to ALL Rows)
+
+| Category     | Rule                             |
+| ------------ | -------------------------------- |
+| Cost         | Only free / free-tier tools      |
+| Language     | TypeScript                       |
+| Framework    | NestJS                           |
+| Logging      | Structured JSON only             |
+| Context      | `contextId` mandatory end-to-end |
+| Secrets      | No secrets in code               |
+| Architecture | Modular Monolith                 |
+| Cloud        | AWS Free Tier                    |
+
+---
+
+## PHASE 0 — Architecture, Standards & Context Foundation
+
+| Phase | Step | Task Name              | Description                                                     | Output / Acceptance            |
+| ----- | ---- | ---------------------- | --------------------------------------------------------------- | ------------------------------ |
+| 0     | 0.1  | Architecture Decisions | Define modular monolith, domain boundaries, sync vs async rules | ADR documented                 |
+| 0     | 0.2  | Repo Structure         | Monorepo layout with apps/libs separation                       | Folder structure frozen        |
+| 0     | 0.3  | Request Context Design | Design `contextId` lifecycle from ingress to exit               | Context flow diagram           |
+| 0     | 0.4  | Context Middleware     | Middleware generates & attaches contextId                       | contextId available everywhere |
+| 0     | 0.5  | Async Context Storage  | Implement AsyncLocalStorage wrapper                             | Context survives async calls   |
+| 0     | 0.6  | Logging Contract       | Define mandatory log fields                                     | Log schema approved            |
+| 0     | 0.7  | Logger Service         | Context-aware structured logger                                 | No console.log                 |
+| 0     | 0.8  | Error Model            | Base error class & error codes                                  | Normalized errors              |
+| 0     | 0.9  | Config Strategy        | Env validation & config loader                                  | App fails fast on bad env      |
+
+---
+
+## PHASE 1 — Core Backend Bootstrap & Deployment
+
+| Phase | Step | Task Name                 | Description                                           | Output / Acceptance         |
+| ----- | ---- | ------------------------- | ----------------------------------------------------- | --------------------------- |
+| 1     | 1.1  | NestJS Bootstrap          | Create app with global pipes, filters, shutdown hooks | App starts cleanly          |
+| 1     | 1.2  | Context Middleware Wiring | Apply context middleware globally                     | All requests have contextId |
+| 1     | 1.3  | Health API                | `/health` endpoint                                    | Returns healthy             |
+| 1     | 1.4  | Meta API                  | `/meta` (version, uptime, env)                        | Metadata visible            |
+| 1     | 1.5  | Dockerfile                | Non-root container, healthcheck                       | Secure image                |
+| 1     | 1.6  | AWS Deploy                | Deploy to EC2 / EB                                    | Public API reachable        |
+| 1     | 1.7  | Log Verification          | Verify start→end logs per request                     | contextId consistent        |
+
+---
+
+## PHASE 2 — PostgreSQL (Transactional Core)
+
+| Phase | Step | Task Name      | Description                          | Output / Acceptance |
+| ----- | ---- | -------------- | ------------------------------------ | ------------------- |
+| 2     | 2.1  | Postgres Setup | Local Docker + AWS RDS               | DB reachable        |
+| 2     | 2.2  | ORM Setup      | Configure ORM & migrations           | Migration runs      |
+| 2     | 2.3  | Users Schema   | Users table with audit & soft delete | Table created       |
+| 2     | 2.4  | Orders Schema  | Orders table with FK & status        | FK enforced         |
+| 2     | 2.5  | Transactions   | Order creation in transaction        | Rollback works      |
+| 2     | 2.6  | Idempotency    | Idempotency key support              | Duplicate safe      |
+| 2     | 2.7  | Indexing       | Add business indexes                 | Queries optimized   |
+| 2     | 2.8  | DB Logging     | Log query time with contextId        | Traceable DB calls  |
+
+---
+
+## PHASE 3 — MongoDB (Flexible Domain Data)
+
+| Phase | Step | Task Name           | Description                  | Output / Acceptance |
+| ----- | ---- | ------------------- | ---------------------------- | ------------------- |
+| 3     | 3.1  | Mongo Setup         | Local + Atlas free tier      | Connected           |
+| 3     | 3.2  | Services Collection | Service config documents     | Collection ready    |
+| 3     | 3.3  | Schema Evolution    | Backward-compatible changes  | Version-safe        |
+| 3     | 3.4  | Indexes             | Compound & selective indexes | Explain plan OK     |
+| 3     | 3.5  | DB Boundary Rules   | Enforce no cross-DB joins    | Rules documented    |
+
+---
+
+## PHASE 4 — API Layer (REST + GraphQL)
+
+| Phase | Step | Task Name       | Description                  | Output / Acceptance |
+| ----- | ---- | --------------- | ---------------------------- | ------------------- |
+| 4     | 4.1  | REST Versioning | `/v1` routing strategy       | Backward compatible |
+| 4     | 4.2  | REST APIs       | Users, Orders, Services APIs | CRUD works          |
+| 4     | 4.3  | GraphQL Setup   | GraphQL module & schema      | Server running      |
+| 4     | 4.4  | GraphQL Queries | Aggregated queries           | N+1 avoided         |
+| 4     | 4.5  | API Logging     | Request/response metadata    | Safe logs           |
+
+---
+
+## PHASE 5 — Authentication & Authorization
+
+| Phase | Step | Task Name      | Description                  | Output / Acceptance |
+| ----- | ---- | -------------- | ---------------------------- | ------------------- |
+| 5     | 5.1  | Passport Setup | Local + JWT strategy         | Auth works          |
+| 5     | 5.2  | Auth APIs      | Signup, login, refresh       | Tokens issued       |
+| 5     | 5.3  | Token Strategy | Short-lived access + refresh | Secure auth         |
+| 5     | 5.4  | RBAC           | Role-based guards            | Access controlled   |
+| 5     | 5.5  | Auth Context   | User injected into context   | Traceable user      |
+
+---
+
+## PHASE 6 — Caching (Redis)
+
+| Phase | Step | Task Name       | Description               | Output / Acceptance |
+| ----- | ---- | --------------- | ------------------------- | ------------------- |
+| 6     | 6.1  | Redis Setup     | Local Docker / free tier  | Connected           |
+| 6     | 6.2  | Cache Strategy  | Cache-aside, read-through | Strategy documented |
+| 6     | 6.3  | Cached Entities | Services, user profile    | Faster reads        |
+| 6     | 6.4  | Invalidation    | TTL & events              | No stale data       |
+| 6     | 6.5  | Cache Logs      | Hit/miss logging          | Observable cache    |
+
+---
+
+## PHASE 7 — Kafka (Event Backbone)
+
+| Phase | Step | Task Name           | Description              | Output / Acceptance |
+| ----- | ---- | ------------------- | ------------------------ | ------------------- |
+| 7     | 7.1  | Kafka Setup         | Local Docker Kafka       | Broker running      |
+| 7     | 7.2  | Event Contracts     | UserCreated, OrderPlaced | Schemas defined     |
+| 7     | 7.3  | Producers           | Emit events post-commit  | Reliable events     |
+| 7     | 7.4  | Consumers           | Idempotent consumers     | Safe processing     |
+| 7     | 7.5  | Context Propagation | contextId in headers     | Trace preserved     |
+
+---
+
+## PHASE 8 — Third-Party API Integration
+
+| Phase | Step | Task Name       | Description                  | Output / Acceptance  |
+| ----- | ---- | --------------- | ---------------------------- | -------------------- |
+| 8     | 8.1  | API Selection   | Choose free third-party APIs | APIs approved        |
+| 8     | 8.2  | Adapter Layer   | External API abstraction     | Clean boundary       |
+| 8     | 8.3  | Resilience      | Timeouts & retries           | No cascading failure |
+| 8     | 8.4  | Circuit Breaker | Fail-fast strategy           | System protected     |
+| 8     | 8.5  | Context Passing | contextId in outbound calls  | Full traceability    |
+
+---
+
+## PHASE 9 — Security, WAF & Compliance
+
+| Phase | Step | Task Name    | Description                | Output / Acceptance |
+| ----- | ---- | ------------ | -------------------------- | ------------------- |
+| 9     | 9.1  | AWS WAF      | Rate limiting & IP rules   | Abuse blocked       |
+| 9     | 9.2  | App Security | Helmet, CORS, sanitization | Hardened app        |
+| 9     | 9.3  | Audit Logs   | Immutable audit records    | Compliance ready    |
+
+---
+
+## PHASE 10 — Observability & Operations
+
+| Phase | Step | Task Name  | Description            | Output / Acceptance |
+| ----- | ---- | ---------- | ---------------------- | ------------------- |
+| 10    | 10.1 | Metrics    | Latency & error rates  | Measurable system   |
+| 10    | 10.2 | Monitoring | Logs & alarms          | Alerts working      |
+| 10    | 10.3 | Playbooks  | Incident response docs | Ops ready           |
+
+---
+
+## PHASE 11 — Scale & Evolution
+
+| Phase | Step | Task Name      | Description                      | Output / Acceptance |
+| ----- | ---- | -------------- | -------------------------------- | ------------------- |
+| 11    | 11.1 | Scale Strategy | Read replicas & async jobs       | Scale plan          |
+| 11    | 11.2 | Service Split  | Identify microservice candidates | Migration roadmap   |
+
+---
+
+

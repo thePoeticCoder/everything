@@ -1,0 +1,252 @@
+Great. Proceeding with **Phase 0 → Step 0.1 (Architecture Decisions & Folder Structure)**.
+
+Below is a **ready-to-commit tech document** for this step.
+Add it as:
+
+```
+everything-backend/docs/phase-0-step-0.1-architecture.md
+```
+
+This document **freezes architecture decisions**. Future phases must comply.
+
+---
+
+# 📘 Phase 0 — Step 0.1
+
+## Architecture Decisions & Folder Structure
+
+**Project:** everything-backend
+**Phase:** 0
+**Step:** 0.1
+**Status:** Frozen
+**Owner:** Backend (Founding Phase)
+
+---
+
+## 1. Objective of Step 0.1
+
+This step defines:
+
+* The **architectural style**
+* **Domain boundaries**
+* **Folder structure**
+* **Non-negotiable structural rules**
+
+Once approved, these **must not change casually**, as they affect scalability, maintainability, and team onboarding.
+
+---
+
+## 2. Architecture Style
+
+### 2.1 Chosen Architecture: **Modular Monolith**
+
+**Definition:**
+A single deployable backend with **strict internal module boundaries**.
+
+**Why this was chosen**
+
+* Early-stage SaaS
+* ~1k requests/day
+* Single backend owner
+* Faster iteration
+* Lower operational overhead
+
+**Explicitly NOT doing (for now):**
+
+* Microservices
+* Multiple deployments
+* Network-based service-to-service calls
+
+---
+
+## 3. Domain-Driven Structure
+
+### 3.1 Business Domains
+
+The system is divided into **business-aligned domains**:
+
+| Domain   | Responsibility                      |
+| -------- | ----------------------------------- |
+| users    | Authentication, identity, user data |
+| orders   | Order lifecycle, transactions       |
+| services | SaaS service definitions & configs  |
+
+Each domain:
+
+* Owns its APIs
+* Owns its services
+* Owns its data access logic
+
+---
+
+## 4. High-Level Folder Structure
+
+```
+everything-backend/
+├── apps/
+│   └── api/
+│       ├── src/
+│       │   ├── main.ts
+│       │   ├── app.module.ts
+│       │   ├── modules/
+│       │   │   ├── users/
+│       │   │   ├── orders/
+│       │   │   └── services/
+│       │   └── infrastructure/
+│       │       ├── context/
+│       │       ├── logger/
+│       │       ├── errors/
+│       │       └── config/
+│       └── test/
+├── libs/
+│   ├── context/
+│   ├── logger/
+│   ├── errors/
+│   ├── config/
+│   └── common/
+├── docs/
+│   ├── phase-0-foundation.md
+│   └── phase-0-step-0.1-architecture.md
+├── docker/
+├── scripts/
+└── README.md
+```
+
+---
+
+## 5. apps vs libs (STRICT RULE)
+
+### apps/
+
+* Entry points
+* Application wiring
+* HTTP layer
+* Module composition
+
+### libs/
+
+* Reusable logic
+* Cross-cutting concerns
+* Zero NestJS controller logic
+
+❌ Business logic must NOT live in `libs`.
+
+---
+
+## 6. Module Structure (Per Domain)
+
+Each domain module follows the same structure:
+
+```
+users/
+├── users.controller.ts
+├── users.service.ts
+├── users.module.ts
+├── dto/
+├── entities/
+└── repositories/
+```
+
+**Rules**
+
+* Controller = orchestration only
+* Service = business logic
+* Repository = DB access
+* DTOs = boundary validation only
+
+---
+
+## 7. Controller Rules (Frozen)
+
+* Max **3–4 endpoints per controller**
+* No DB calls inside controllers
+* No business logic
+* Controllers must be thin
+
+Violation = architectural bug.
+
+---
+
+## 8. Dependency Direction Rules
+
+Allowed:
+
+```
+controller → service → repository
+```
+
+Not allowed:
+
+* controller → repository
+* service → controller
+* domain → domain direct access (later via events)
+
+---
+
+## 9. Infrastructure Layer
+
+Infrastructure concerns are isolated:
+
+```
+infrastructure/
+├── context/
+├── logger/
+├── errors/
+└── config/
+```
+
+These are:
+
+* Used by all domains
+* Do not depend on business modules
+* Context-aware by default
+
+---
+
+## 10. Async & Future Readiness
+
+Although this is a monolith:
+
+* Kafka will be introduced later
+* Async boundaries are respected
+* Domains communicate via events in future
+
+This structure supports **clean extraction** into microservices later.
+
+---
+
+## 11. Architectural Decision Record (ADR)
+
+| Decision     | Choice                  | Reason             |
+| ------------ | ----------------------- | ------------------ |
+| Architecture | Modular Monolith        | Speed + clarity    |
+| Domains      | users, orders, services | Business aligned   |
+| Controllers  | Thin                    | Maintainability    |
+| libs usage   | Infra only              | Avoid coupling     |
+| Deployment   | Single unit             | Free-tier friendly |
+
+---
+
+## 12. Exit Criteria for Step 0.1
+
+This step is **complete** when:
+
+* Folder structure is created
+* Domain boundaries are clear
+* This document is committed
+* No code yet violates these rules
+npx @nestjs/cli new everything-backend
+
+
+---
+
+## 13. What Comes Next
+
+**Step 0.2 — Request Context System Design & Implementation**
+
+This will introduce:
+
+* `contextId`
+* AsyncLocalStorage
+* ContextService API
+
