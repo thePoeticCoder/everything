@@ -7,6 +7,7 @@ export class DebugController {
   @Get('context')
   getContext() {
     LoggerService.info('Debug context endpoint hit');
+    // throw new Error('Test crash');
 
     return {
       contextId: ContextService.getContextId(),
