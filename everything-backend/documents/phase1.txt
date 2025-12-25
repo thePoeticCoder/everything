@@ -1,0 +1,200 @@
+Excellent point 👍
+Yes — **Phase 1 should include a very basic deployment**, otherwise it’s not “real backend ready”.
+
+Below is the **UPDATED Phase 1 Steps Document**, with **deployment added**, but still **free-tier / low-risk / minimal**.
+
+This is now **final and complete for Phase 1**.
+
+---
+
+# 📘 Phase 1 — Core Backend Bootstrap & Initial Deployment
+
+**Purpose:**
+Validate that the backend is:
+
+* runnable locally
+* observable (logs + context)
+* deployable to a real environment
+* ready for DB and auth in later phases
+
+---
+
+## 🎯 Phase 1 Goals
+
+* Backend responds to real HTTP traffic
+* Context, logging, error handling proven
+* First **real deployment** done
+* Zero business logic
+
+---
+
+## 🧱 Phase 1 — Step-by-Step Breakdown
+
+---
+
+## **Step 1.1 — Health Endpoint**
+
+| Item     | Details              |
+| -------- | -------------------- |
+| Endpoint | `GET /health`        |
+| Purpose  | Liveness check       |
+| Response | `{ "status": "ok" }` |
+| Logging  | Info log             |
+| Context  | contextId generated  |
+
+✅ **Acceptance**
+
+* API returns 200
+* Log contains contextId
+
+---
+
+## **Step 1.2 — Meta Endpoint**
+
+| Item     | Details              |
+| -------- | -------------------- |
+| Endpoint | `GET /meta`          |
+| Purpose  | Runtime visibility   |
+| Response | service, env, uptime |
+| Context  | contextId returned   |
+| Logging  | Info log             |
+
+✅ **Acceptance**
+
+* Env correct
+* uptime increases
+* contextId visible
+
+---
+
+## **Step 1.3 — Module & Middleware Wiring**
+
+| Item       | Details                  |
+| ---------- | ------------------------ |
+| Modules    | HealthModule, MetaModule |
+| Middleware | ContextMiddleware global |
+| Logger     | LoggerService only       |
+| Errors     | Global exception filter  |
+
+✅ **Acceptance**
+
+* Middleware runs for all routes
+* No console.log usage
+
+---
+
+## **Step 1.4 — Local Runtime Validation**
+
+| Item      | Details                 |
+| --------- | ----------------------- |
+| Local run | `npm run start:dev`     |
+| Env       | `.env` from root        |
+| Context   | New context per request |
+| Logs      | JSON structured         |
+
+✅ **Acceptance**
+
+* Multiple calls → different contextId
+* Logs clean and structured
+
+---
+
+## **Step 1.5 — Dockerization (Minimal)**
+
+> We dockerize **early**, even if we don’t fully use it yet.
+
+| Item       | Details             |
+| ---------- | ------------------- |
+| Dockerfile | Simple Node runtime |
+| Env        | Passed via env vars |
+| Port       | 3000 exposed        |
+
+✅ **Acceptance**
+
+* App runs inside container
+* Same behavior as local
+
+*(This prepares us for AWS / cloud later)*
+
+---
+
+## **Step 1.6 — First Deployment (Lightweight)**
+
+### Deployment Strategy (Phase 1)
+
+* **Single instance**
+* **Manual deployment**
+* **No CI/CD yet**
+* **Free-tier friendly**
+
+### Options (choose one, Phase 1 level)
+
+* AWS EC2 (free tier) ✅ *recommended*
+* Any simple VM / VPS
+* Even Railway/Fly.io free (optional)
+
+---
+
+### What We Deploy
+
+| Item   | Details                   |
+| ------ | ------------------------- |
+| App    | Same Docker or Node build |
+| Env    | `.env` set on server      |
+| Logs   | Stdout/stderr             |
+| Access | Public IP + port          |
+
+---
+
+✅ **Acceptance**
+
+* `/health` reachable publicly
+* `/meta` reachable publicly
+* Logs visible on server
+* App restarts cleanly
+
+---
+
+## **Step 1.7 — Post-Deployment Verification**
+
+| Check   | Expected            |
+| ------- | ------------------- |
+| Health  | `status: ok`        |
+| Meta    | Correct env         |
+| Context | contextId generated |
+| Logs    | Structured          |
+| Errors  | Masked              |
+
+---
+
+## 🚫 What Phase 1 Still Does NOT Include
+
+* ❌ Database
+* ❌ Authentication
+* ❌ Caching
+* ❌ Kafka
+* ❌ Third-party APIs
+* ❌ Autoscaling / CI-CD
+
+Those come later **by design**.
+
+---
+
+## ✅ Phase 1 Exit Criteria (FINAL)
+
+Phase 1 is complete when:
+
+* Local backend runs
+* Health & meta APIs work
+* Context + logger verified
+* Docker build works
+* Backend deployed once
+* Public endpoint reachable
+
+At this point you can confidently say:
+
+> “Our backend is live.”
+
+---
+
+
